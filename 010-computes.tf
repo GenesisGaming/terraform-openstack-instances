@@ -5,13 +5,20 @@ resource "openstack_compute_instance_v2" "instance" {
   name        = var.name
   flavor_name = var.flavor_name
 
-  block_device {
-    uuid                  = var.image_id
-    source_type           = "image"
-    volume_size           = var.block_device_volume_size
-    boot_index            = 0
-    destination_type      = "volume"
-    delete_on_termination = var.block_device_delete_on_termination
+  dynamic "block_device" {
+    for_each = var.block_device
+    content {
+      uuid                  = lookup(block_device.value, "uuid", null)
+      source_type           = lookup(block_device.value, "source_type", null)
+      volume_size           = lookup(block_device.value, "volume_size", 10)
+      guest_format          = lookup(block_device.value, "guest_format", null)
+      boot_index            = lookup(block_device.value, "boot_index", 0)
+      destination_type      = lookup(block_device.value, "destination_type", null)
+      delete_on_termination = lookup(block_device.value, "delete_on_termination", false)
+      volume_type           = lookup(block_device.value, "volume_type", null)
+      device_type           = lookup(block_device.value, "device_type", null)
+      disk_bus              = lookup(block_device.value, "disk_bus", null)
+    }
   }
 
   key_pair = var.key_pair_name
@@ -30,6 +37,8 @@ resource "openstack_compute_instance_v2" "instance" {
       port = network.value["id"]
     }
   }
+
+  user_data = var.user_data
 }
 
 # Create network port

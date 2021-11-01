@@ -79,3 +79,15 @@ List of server group id
 EOF
   default = []
 }
+
+variable "block_device" {
+  description = "Additional block devices to attach to the instance"
+  type        = list(map(string))
+  default     = []
+}
+
+variable "user_data" {
+  description = "The user data to provide when launching the instance"
+  type        = string
+  default     = null
+}
