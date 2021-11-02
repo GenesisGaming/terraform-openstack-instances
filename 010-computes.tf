@@ -2,7 +2,8 @@
 # Create instance
 #
 resource "openstack_compute_instance_v2" "instance" {
-  name        = var.name
+  count       = var.instance_count
+  name        = "${var.name}-${count.index + 1}"
   flavor_name = var.flavor_name
 
   dynamic "block_device" {
@@ -38,6 +39,15 @@ resource "openstack_compute_instance_v2" "instance" {
     }
   }
 
+  dynamic "network" {
+    for_each = var.network_name 
+
+    content {
+      name = lookup(network.value, "name", null)
+    }
+
+  }
+
   user_data = var.user_data
 }
 
@@ -68,5 +78,5 @@ resource "openstack_compute_floatingip_associate_v2" "ipa" {
   count = var.is_public ? 1: 0
 
   floating_ip = openstack_networking_floatingip_v2.ip[count.index].address
-  instance_id = openstack_compute_instance_v2.instance.id
+  instance_id = openstack_compute_instance_v2.instance[count.index].id
 }

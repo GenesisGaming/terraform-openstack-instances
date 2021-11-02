@@ -55,6 +55,7 @@ variable "ports" {
   description = <<EOF
 The ports list, at least 1 port is required
 EOF
+  default = []
 }
 
 variable "block_device_volume_size" {
@@ -92,3 +93,14 @@ variable "user_data" {
   type        = string
   default     = null
 }
+
+variable "network_name" {
+  type        = list(map(string))
+  default     = []
+}
+
+variable "instance_count" {
+  type        = number
+  default     = 1
+}
+
