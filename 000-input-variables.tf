@@ -10,6 +10,7 @@ variable "image_id" {
   description = <<EOF
 The image's id referenced in openstack
 EOF
+  default = null
 }
 
 variable "name" {
