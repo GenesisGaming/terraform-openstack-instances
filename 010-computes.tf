@@ -3,7 +3,7 @@
 #
 resource "openstack_compute_instance_v2" "instance" {
   count       = var.instance_count
-  name        = "${var.name}-${count.index + 1}"
+  name        = var.instance_count == 1 ? var.name : "${var.name}-${count.index + 1}"
   flavor_name = var.flavor_name
 
   dynamic "block_device" {
