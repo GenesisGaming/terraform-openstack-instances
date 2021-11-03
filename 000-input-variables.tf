@@ -3,6 +3,7 @@ variable "key_pair_name" {
   description = <<EOF
 The name of the ssh key referenced in openstack
 EOF
+  default = null
 }
 
 variable "image_id" {
