@@ -47,6 +47,10 @@ resource "openstack_compute_instance_v2" "instance" {
     }
 
   }
+  
+  metadata = var.metadata
+
+  tags = var.tags
 
   user_data = var.user_data
 }

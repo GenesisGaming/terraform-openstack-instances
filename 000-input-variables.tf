@@ -105,3 +105,13 @@ variable "instance_count" {
   default     = 1
 }
 
+variable "tags" {
+  type        = list(string)
+  default     = []
+}
+
+variable "metadata" {
+  description = " (Optional) Metadata key/value pairs to make available from within the instance"
+  type        = map(string)
+  default     = null
+}
