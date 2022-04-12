@@ -53,6 +53,10 @@ resource "openstack_compute_instance_v2" "instance" {
   tags = var.tags
 
   user_data = var.user_data
+
+  lifecycle {
+    ignore_changes = ["user_data"]
+  }
 }
 
 # Create network port
