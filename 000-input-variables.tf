@@ -51,6 +51,8 @@ variable "ports" {
     subnet_id = string
     admin_state_up = optional(bool)
     security_group_ids = optional(list(string))
+    no_security_groups = optional(bool)
+    port_security_enabled = optional(bool)
     ip_address = optional(string)
   }))
   description = <<EOF

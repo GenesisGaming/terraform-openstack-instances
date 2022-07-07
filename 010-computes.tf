@@ -72,6 +72,8 @@ resource "openstack_networking_port_v2" "port" {
     subnet_id = var.ports[count.index].subnet_id
     ip_address = var.ports[count.index].ip_address == null ? null : var.ports[count.index].ip_address
   }
+  no_security_groups = var.ports[count.index].no_security_groups == null ? true : var.ports[count.index].no_security_groups
+  port_security_enabled = var.ports[count.index].port_security_enabled  == null ? true : var.ports[count.index].port_security_enabled 
 }
 
 # Create floating ip
